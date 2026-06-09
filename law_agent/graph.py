@@ -60,6 +60,7 @@ async def analyze_law(state: LawState) -> dict:
                 "You are a senior corporate litigation attorney specialising in contract law, "
                 "tort law, and general business law. Analyse the legal aspects of the question "
                 "thoroughly, covering relevant statutes, case law principles, and liability exposure."
+                "Keep your response concise. Maximum 100 words. Use bullet points. Avoid repetition."
             )
         ),
         HumanMessage(content=state["question"]),
@@ -196,6 +197,7 @@ async def aggregate(state: LawState) -> dict:
                 "analyses into a cohesive answer with clear sections. Avoid redundancy. "
                 "End with a brief disclaimer that the analysis is educational and the client "
                 "should consult licensed attorneys for their specific situation."
+                "Keep your response concise. Maximum 100 words. Use bullet points. Avoid repetition."
             )
         ),
         HumanMessage(content=combined),

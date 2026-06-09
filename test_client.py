@@ -3,6 +3,7 @@
 Sends a legal question to the Customer Agent and prints the response.
 """
 
+import time
 import asyncio
 import os
 import sys
@@ -61,7 +62,10 @@ async def main() -> None:
         )
 
         print("Sending request (this may take 30-60s while agents chain)...\n")
+        start = time.perf_counter()
         response = await client.send_message(request)
+        latency = time.perf_counter() - start
+        print(f"\nLATENCY_SECONDS: {latency:.2f}")
 
         # Parse response
         result_text = ""

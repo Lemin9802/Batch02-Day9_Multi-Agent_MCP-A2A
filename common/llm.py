@@ -1,8 +1,4 @@
-"""Shared LLM factory for all agents.
-
-Uses OpenRouter as an OpenAI-compatible API, so any provider's model
-can be selected via the OPENROUTER_MODEL env var.
-"""
+"""Shared LLM factory for all agents."""
 
 import os
 
@@ -15,4 +11,6 @@ def get_llm() -> ChatOpenAI:
         model=os.getenv("OPENROUTER_MODEL", "anthropic/claude-sonnet-4-5"),
         openai_api_key=os.getenv("OPENROUTER_API_KEY"),
         openai_api_base="https://openrouter.ai/api/v1",
+        temperature=float(os.getenv("OPENROUTER_TEMPERATURE", "0.2")),
+        max_tokens=int(os.getenv("OPENROUTER_MAX_TOKENS", "500")),
     )

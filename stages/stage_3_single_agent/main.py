@@ -171,12 +171,40 @@ def check_compliance_requirements(industry: str, company_size: str) -> str:
         f"  {size_note}"
     )
 
+@tool
+def search_case_law(keywords: str) -> str:
+    """Search relevant case law by keyword.
 
-TOOLS = [search_legal_database, calculate_penalty, check_compliance_requirements]
+    Args:
+        keywords: Case law search keywords.
+    """
+    cases = {
+        "breach": "Hadley v. Baxendale (1854) - Consequential damages for breach of contract.",
+        "negligence": "Donoghue v. Stevenson (1932) - Duty of care in negligence.",
+        "contract": "Carlill v. Carbolic Smoke Ball Co (1893) - Unilateral contract.",
+        "privacy": "Carpenter v. United States (2018) - Privacy expectations in digital records.",
+        "tax": "Cheek v. United States (1991) - Willfulness requirement in criminal tax cases.",
+    }
+
+    lower = keywords.lower()
+    matches = [case for key, case in cases.items() if key in lower]
+
+    if matches:
+        return "\n".join(matches)
+
+    return "No matching case law found."
+
+
+TOOLS = [
+    search_legal_database,
+    calculate_penalty,
+    check_compliance_requirements,
+    search_case_law,
+]
 
 QUESTION = (
-    "A tech startup with $5M revenue was caught sharing user data without consent "
-    "and failed to pay taxes on overseas revenue. What are all the legal consequences?"
+    "A company breached a contract and caused foreseeable lost profits. "
+    "What are the legal consequences? Include relevant case law."
 )
 
 SYSTEM_PROMPT = (
@@ -184,6 +212,7 @@ SYSTEM_PROMPT = (
     "calculating penalties, and checking compliance requirements. Use these tools to build "
     "a comprehensive analysis. Search for each legal area separately — data privacy, tax, "
     "and compliance. Keep your final answer under 500 words."
+    "Also search for relevant case law when the question involves breach, negligence, contract, privacy, or tax."
 )
 
 
